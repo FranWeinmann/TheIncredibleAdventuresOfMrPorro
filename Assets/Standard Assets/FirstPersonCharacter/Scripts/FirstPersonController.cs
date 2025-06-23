@@ -43,9 +43,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
 
+        private Alteruna.Avatar _avatar;
+
         // Use this for initialization
         private void Start()
         {
+            _avatar = GetComponent<Alteruna.Avatar>();
+
+            if (!_avatar.IsMe) return;
             m_CharacterController = GetComponent<CharacterController>();
             m_Camera = Camera.main;
             m_OriginalCameraPosition = m_Camera.transform.localPosition;
@@ -62,6 +67,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         // Update is called once per frame
         private void Update()
         {
+            if (!_avatar.IsMe) return;
+
             RotateView();
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
